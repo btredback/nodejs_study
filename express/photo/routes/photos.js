@@ -15,4 +15,4 @@ exports.showList = function(req,res){
             photos:photos
         }
     )
-}
+};
