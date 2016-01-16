@@ -40,10 +40,14 @@ exports.form = function(req,res){
 * 这个例子中，dir是app.js set方法定义的，在文件被挪到位后，一个新Photo对象呗组装出来
 * */
 exports.submit = function(dir){
+    console.log("dir---->"+dir);
     return function (req,res,next){
-        var img = req.files.photo.image;
-        var name = req.body.photo.name || img.name;
-        var path = join(dir,img.name);
+        console.log("req.body---->"+req.body.photo.name);
+        console.log("req.files---->"+req.file+'---'+req.file.filename);
+        //mutler 单一文件 不在有req.files 而是req.file就能得到上传的文件
+        var img = req.file;
+        var name = req.body.photo.name || img.filename;
+        var path = join(dir,img.filename);
 
         //重命名
         fs.rename(img.path,path,function(err){
@@ -51,7 +55,7 @@ exports.submit = function(dir){
 
             Photo.create({
                 name:name,
-                path:img.name
+                path:img.filename
             },function(err){
                 if(err) return next(err);
                 //重定向

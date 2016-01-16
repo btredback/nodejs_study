@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var multer = require('multer');
+var upload = multer({ dest: __dirname+'/public/photos' });
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -15,7 +17,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 //upload dir
-app.set('photos',__dirname + '/public/photos');
+app.set('photos',__dirname + '\\public\\photos');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -25,12 +27,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 //app.use('/', routes);
 app.get('/',photos.showList);
 //app.use('/users', users);
 //上传表单相关路由
 app.get('/upload',photos.form);
-app.post('/upload',photos.submit(app.get('photos')));
+//具体使用见mutler的github
+app.post('/upload',upload.single('photo'),photos.submit(app.get('photos')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
