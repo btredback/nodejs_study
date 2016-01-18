@@ -75,3 +75,16 @@ exports.showList = function(req,res,next){
         });
     });
 };
+//download
+exports.download = function(dir){
+    "use strict";
+    return function(req,res,next){
+        var id = req.params.id;
+        Photo.findById(id,function(err,photo){
+            if(err) return next(err);
+            var path = join(dir,photo.path);
+            //res.sendfile(path);
+            res.download(path,photo.name + '.jpg');
+        })
+    }
+};

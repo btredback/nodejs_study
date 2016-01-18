@@ -35,6 +35,8 @@ app.get('/',photos.showList);
 app.get('/upload',photos.form);
 //具体使用见mutler的github
 app.post('/upload',upload.single('photo'),photos.submit(app.get('photos')));
+//download photo route
+app.get('/photo/:id/download',photos.download(app.get('photos')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
