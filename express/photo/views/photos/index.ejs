@@ -9,12 +9,13 @@
 <p>Welcome to photos</p>
 <div id="photos">
         <% photos.forEach(function(photo){ %>
-
-            <div class="photo">
-                <img src='/photos/<%= photo.path %>'>
+            <div class="photo-line">
+                <div class="photo">
+                    <img src='/photos/<%= photo.path %>'>
+                </div>
+                <h2><%= photo.name %></h2>
+                <a href="/photo/<%= photo.id %>/download">download</a>
             </div>
-            <h2><%= photo.name %></h2>
-            <a href="/photo/<%= photo.id %>/download">download</a>
            <% }) %>
         %>
 </div>
